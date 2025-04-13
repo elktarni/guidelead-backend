@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
-const leadSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
-});
+const leadSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    message: { type: String },
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('Lead', leadSchema);

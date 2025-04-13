@@ -1,3 +1,6 @@
+const adminRoutes = require("./routes/admin");
+app.use(adminRoutes);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
