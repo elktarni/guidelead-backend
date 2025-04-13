@@ -1,3 +1,6 @@
+const trackRoute = require("./routes/track");
+app.use(trackRoute);
+
 const adminRoutes = require("./routes/admin");
 app.use(adminRoutes);
 
@@ -9,6 +12,8 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static('public'));
 
 // Connect DB
 mongoose.connect(process.env.MONGODB_URI)
