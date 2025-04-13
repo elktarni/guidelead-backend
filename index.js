@@ -1,11 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('🟢 GuideLead API is live!');
-});
+// Connect DB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB error:', err));
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Routes
+app.get('/', (req, res) => res.send('🟢 GuideLead API is live!'));
+app.use('/projects', require('./routes/projectRoutes'));
+app.use('/leads', require('./routes/leadRoutes'));
+
+// Start server
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
