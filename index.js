@@ -1,9 +1,11 @@
-var http = require('http');
-var server = http.createServer(function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    var message = 'It works!\n',
-        version = 'NodeJS ' + process.versions.node + '\n',
-        response = [message, version].join('\n');
-    res.end(response);
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('🟢 GuideLead API is live!');
 });
-server.listen();
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
