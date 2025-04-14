@@ -27,8 +27,19 @@ router.get("/leads", async (req, res) => {
 // GET /leads/all
 router.get("/leads/all", async (req, res) => {
   try {
+    // Fetch all leads and include the phone field
     const allLeads = await Lead.find().sort({ createdAt: -1 });
-    res.json({ leads: allLeads });
+
+    // Map through the leads to ensure they include the phone field
+    const leadsWithPhone = allLeads.map((lead) => ({
+      name: lead.name,
+      email: lead.email,
+      phone: lead.phone || "N/A",  // Ensure phone field is included, with a fallback value if not present
+      message: lead.message || "N/A",  // Ensure message field is included, with a fallback value if not present
+      createdAt: lead.createdAt,
+    }));
+
+    res.json({ leads: leadsWithPhone });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch all leads." });
   }
