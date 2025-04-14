@@ -27,15 +27,14 @@ router.get("/leads", async (req, res) => {
 // GET /leads/all
 router.get("/leads/all", async (req, res) => {
   try {
-    // Fetch all leads and include the phone field
     const allLeads = await Lead.find().sort({ createdAt: -1 });
 
-    // Map through the leads to ensure they include the phone field
+    // Map through the leads and ensure the phone and message fields are returned
     const leadsWithPhone = allLeads.map((lead) => ({
       name: lead.name,
       email: lead.email,
-      phone: lead.phone || "N/A",  // Ensure phone field is included, with a fallback value if not present
-      message: lead.message || "N/A",  // Ensure message field is included, with a fallback value if not present
+      phone: lead.phone || "N/A",  // If phone is missing, return 'N/A'
+      message: lead.message || "N/A",  // If message is missing, return 'N/A'
       createdAt: lead.createdAt,
     }));
 
