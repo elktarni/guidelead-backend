@@ -4,8 +4,8 @@ const Lead = require('../models/Lead');
 
 // POST lead
 router.post('/', async (req, res) => {
-  const { name, email, message } = req.body;
-  const newLead = new Lead({ name, email, message });
+  const { name, email, phone, message } = req.body;
+  const newLead = new Lead({ name, email, phone, message });
   await newLead.save();
   res.json({ success: true });
 });
